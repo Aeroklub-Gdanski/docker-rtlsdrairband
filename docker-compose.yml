@@ -1,0 +1,18 @@
+services:
+  rtlsdirairband:
+    image: ghcr.io/sdr-enthusiasts/docker-rtlsdrairband:latest
+    container_name: rtlsdrairband
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    device_cgroup_rules:
+      - "c 189:* rwm"
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb:ro
+    ports:
+      - 8000:8000
+    environment:
+      - RTLSDRAIRBAND_FREQS=122.405
+      - RTLSDRAIRBAND_NAME=EPPR
+      - RTLSDRAIRBAND_MOUNTPOINT=EPPR.mp3
+      - RTLSDRAIRBAND_SERIAL=00000001 # RTL-SDR BLOG V4 (sudo rtl_eeprom -d 1)
